@@ -1,0 +1,144 @@
+<view class="main">
+  <!-- 公共头部 -->
+  <MyTitle></MyTitle>
+</view>
+<view class="main_tab {{curTab==0?'show':'hide'}}">
+  <!--主盒子-->
+  <view class="container">
+    <!--左侧栏-->
+    <view class="nav_left">
+      <block wx:for="{{cateItems}}">
+        <!--当前项的id等于item项的id，那个就是当前状态-->
+        <!--用data-index记录这个数据在数组的下标位置，使用data-id设置每个item的id值，供打开2级页面使用-->
+        <view class="nav_left_items {{curNav == item.cate_id ? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.cate_id}}">{{item.cate_name}}</view>
+      </block>
+    </view>
+    <!--右侧栏-->
+    <view class="nav_right">
+      <!--如果有数据，才遍历项-->
+      <view wx:if="{{cateItems[curIndex].ishaveChild}}">
+        <block wx:for="{{cateItems[curIndex].children}}">
+          <view class="nav_right_items">
+          <!--界面跳转 -->
+            <navigator url="../redirect/redirect?cate_id={{curNav}}&child_id={{item.child_id}}">
+              <image src="{{item.image}}"></image>
+              <text>{{item.name}}</text>
+            </navigator>
+          </view>
+        </block>
+      </view>
+      <!--如果无数据，则显示数据-->
+      <view class="nodata_text" wx:else>该分类暂无数据</view>
+    </view>
+  </view>
+</view>
+<view class="main_tab {{curTab==1?'show':'hide'}}">
+  <form class="send-form" bindsubmit="formSendSubmit" bindreset="formSendReset">
+    <view class="form-item">
+      <picker mode="selector" name="typePicker" bindchange="bindSendPickerChange" value="{{sendCurrentIndex}}" range="{{cateItems}}" range-key="cate_name">
+        <view class="picker">
+          选择类别：{{cateItems[sendCurrentIndex].cate_name}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item" wx:if="{{cateItems[sendCurrentIndex].ishaveChild}}">
+      <picker mode="selector" name="typeSubPicker" bindchange="bindSendSubPickerChange" value="{{sendCurrentSubIndex}}" range="{{cateItems[sendCurrentIndex].children}}" range-key="name">
+        <view class="picker">
+          选择类目：{{cateItems[sendCurrentIndex].children[sendCurrentSubIndex].name}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <input name="name" style="background-color: #FFFFFF" placeholder="请输入名称" />
+    </view>
+    <view class="form-item">
+      <input name="text1" style="background-color: #FFFFFF" placeholder="请输入类型" />
+    </view>
+    <view class="form-item">
+      <input name="text2" style="background-color: #FFFFFF" placeholder="请输入薪资" />
+    </view>
+    <view class="form-item">
+      <input name="address" style="background-color: #FFFFFF" placeholder="请输入地址" />
+    </view>
+    <view class="form-item">
+      <input name="time" style="background-color: #FFFFFF" placeholder="请输入时间" />
+    </view>
+    <view class="form-item">
+      <input name="phone" style="background-color: #FFFFFF" placeholder="请输入电话" />
+    </view>
+    <view class="form-item">
+      <input name="treatment" style="background-color: #FFFFFF" placeholder="请输入待遇" />
+    </view>
+    <view class="form-item">
+      <button form-type="submit">发布招聘</button>
+    </view>
+  </form>
+</view>
+<view class="main_tab {{curTab==2?'show':'hide'}}">
+信息
+</view>
+<view class="main_tab {{curTab==3?'show':'hide'}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+  <view class="my">
+    <block wx:if="{{!hasUserInfo && canIUse}}">
+      <button open-type="getUserInfo" class='show-author' bindgetuserinfo="getUserInfo">
+        <text>使用微信登录</text>
+        <text class="">我们需要您登录以后才能为您服务</text>
+      </button>
+    </block>
+    <block wx:else>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <view class="userinfo-right">
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <text class="userinfo-small">{{userInfo.nickName}}</text>
+      </view>
+    </block>
+  </view>
+  <view class="my-form" wx:if="{{hasUserInfo && myInfo}}">
+    <view wx:if="{{isEditingMyInfo}}">
+      <view class="form-item">
+        <input value="{{myInfo.address}}" style="background-color: #eee" placeholder="请输入您的联系地址" />
+      </view>
+      <view class="form-item">
+        <input value="{{myInfo.phone}}" style="background-color: #eee" placeholder="请输入您的联系电话" />
+      </view>
+      <view class="form-item flex-center" style="margin-top:20px">
+        <button class="button-not-full" style="width:110px" bindtap="saveEditMyInfo">保存修改</button>
+        <button class="button-not-full" style="width:80px" bindtap="unsaveEditMyInfo">放弃</button>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="info-item">
+        <text class="instr">我的地址</text>
+        <text class="val">{{myInfo.address}}</text>
+      </view>
+      <view class="info-item">
+        <text class="instr">我的联系电话</text>
+        <text class="val">{{myInfo.phone}}</text>
+      </view>
+      <view class="form-item" style="margin-top:20px">
+        <button class="show-author" bindtap="editMyInfo">修改信息</button>
+      </view>
+    </view>
+  </view>
+</view>
+<!--底栏-->
+<view class="footbar">
+  <view class="item {{curTab==0?'active':''}}" data-current="0" bindtap="clickTab">
+    <image src="/images/sc.png"></image>
+    <text>兼职</text>
+  </view>
+  <view class="item {{curTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+    <image src="/images/fb.png"></image>
+    <text>招聘</text>
+  </view>
+  <view class="item {{curTab==2?'active':''}}" data-current="2" bindtap="clickTab">
+    <image src="/images/kh.png"></image>
+    <text>信息</text>
+  </view>
+  <view class="item {{curTab==3?'active':''}}" data-current="3" bindtap="clickTab">
+    <image src="/images/wd.png"></image>
+    <text>我的</text>
+  </view>
+</view>
+
+<!-- sample.wxml -->

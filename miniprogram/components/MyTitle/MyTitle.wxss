@@ -1,0 +1,40 @@
+.my_title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx;
+  padding-left: 15rpx;
+  background-color: white;
+}
+.logo{
+  width: 40px;
+  margin-left: 5px;
+}
+.search_icon{
+  position: relative;
+  display: inline-block;
+  width: calc(100% - 60px);
+}
+.search_icon input {
+  padding: 6px 10px;
+  background-color: #f0f0f0;
+  border-radius: 35px;
+}
+.search_icon .search {
+  width: 100rpx;
+  height: 25px;
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  border-radius: 30px;
+  background-color: #f71f1f;
+  color: #fff;
+  font-size: 14px;
+  padding: 3px 6px;
+  margin: 0;
+  min-height: unset;
+}
+.user_icon{
+  display: flex;
+  align-items: center;
+}

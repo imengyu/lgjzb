@@ -1,0 +1,25 @@
+<!-- redirect.wxml -->
+<view style="text-align:center">{{title}} </view>
+<view> 
+  <text></text>
+  <view wx:if="{{items}}">
+    <block wx:for="{{items}}" wx:for-index="bindex">
+      <view class="item">
+        <view class="left">
+          <text class="title">{{item.name}}</text>
+          <text class="price">{{item.price}}</text>
+        </view>
+        <button wx:if="{{item.open}}" class="detail collapse" bindtap="collapseItem" data-index="{{bindex}}">收起</button>
+        <button wx:else class="detail" bindtap="expandItem" data-index="{{bindex}}">详情</button>
+        <view wx:if="{{item.open}}" class="expand-area">
+          <text class="text">地址：{{item.address}}</text>
+          <text class="text">时间：{{item.time}}</text>
+          <text class="text">电话：{{item.phone}}</text>
+          <text class="text">待遇：{{item.treatment}}</text>
+          <text class="text small">发布时间：{{item.add_time}}</text>
+          <button class="signup" bindtap="signIteUpm" id="{{item.id}}">立即报名</button>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
