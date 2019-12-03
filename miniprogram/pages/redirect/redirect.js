@@ -1,4 +1,9 @@
 Page({
+  data: {
+    child_id: 0,
+    cate_id: 0,
+    loadStatus: 'loading',
+  },
   onLoad: function (options) {
     this.setData({
       child_id: options.child_id,
@@ -6,10 +11,14 @@ Page({
     });
     this.loadItems();
   },
+  bindTapRelaod: function(e) {
+    this.loadItems();
+  },
   loadItems: function() {
     var that = this;
+    that.setData({  loadStatus: 'loading' })
     wx.request({
-      url: 'http://localhost:3010/getData?cate_id=' + this.data.cate_id + '&child_id=' + this.data.child_id,
+      url: 'http://localhost:3010/getData?cate_id=' + that.data.cate_id + '&child_id=' + that.data.child_id,
       data: 'get',
       header: {},
       method: 'GET',
@@ -19,10 +28,15 @@ Page({
         for (var i = 0; i < res.data.length; i++) 
           res.data.open = false;
         that.setData({
-          items: res.data
+          items: res.data,
+          loadStatus: 'loaded'
         })
       },
-      fail: function(res) {},
+      fail: function(res) {
+        that.setData({
+          loadStatus: 'failed'
+        });
+      },
       complete: function(res) {},
     })
   },

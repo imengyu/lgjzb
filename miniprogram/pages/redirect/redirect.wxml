@@ -1,7 +1,13 @@
 <!-- redirect.wxml -->
 <view style="text-align:center">{{title}} </view>
 <view> 
-  <text></text>
+  <view wx:if="{{loadStatus=='failed'}}" class="status-area">
+    <text>哎呀，加载失败了！</text>
+    <button class="reload-button" bindtap="bindTapRelaod">重试</button>
+  </view>
+  <view wx:if="{{loadStatus=='loading'}}" class="status-area">
+    <text>正在加载</text>
+  </view>
   <view wx:if="{{items}}">
     <block wx:for="{{items}}" wx:for-index="bindex">
       <view class="item">
