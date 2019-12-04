@@ -58,6 +58,9 @@
   min-height: unset!important;
   font-size: 14px;
 }
+.signup.ed {
+  background-color: #aa1a00;
+}
 .signup:active {
   background-color: #c51e00;
 }

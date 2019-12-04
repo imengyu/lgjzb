@@ -1,3 +1,7 @@
+const config = require('./utils/const.js')
+const auth = require('./utils/auth.js')
+const app = getApp()
+
 App({
 
   /**
@@ -8,10 +12,14 @@ App({
     wx.checkSession({
       success() {
         console.log('session_key 有效');
+        auth.checkServerLogged((logged) => {
+          if (!logged) 
+            auth.login();
+        });
       },
       fail() {
         // session_key 已经失效，需要重新执行登录流程
-        wx.login({});
+        auth.login();
       }
     })
 
@@ -24,7 +32,6 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -38,6 +45,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    userInfoServerId: null,
   },
 
   /**

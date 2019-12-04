@@ -9,7 +9,7 @@
     <text>正在加载</text>
   </view>
   <view wx:if="{{items}}">
-    <block wx:for="{{items}}" wx:for-index="bindex">
+    <block wx:for="{{items}}" wx:for-index="bindex" wx:key="bindex">
       <view class="item">
         <view class="left">
           <text class="title">{{item.name}}</text>
@@ -23,7 +23,8 @@
           <text class="text">电话：{{item.phone}}</text>
           <text class="text">待遇：{{item.treatment}}</text>
           <text class="text small">发布时间：{{item.add_time}}</text>
-          <button class="signup" bindtap="signIteUpm" id="{{item.id}}">立即报名</button>
+          <button wx:if="{{item.signuped}}" class="signup ed" data-index="{{bindex}}">您已报名，可在信息中查看</button>
+          <button wx:else class="signup" bindtap="signIteUpm" id="{{item.id}}" data-index="{{bindex}}">立即报名</button>
         </view>
       </view>
     </block>

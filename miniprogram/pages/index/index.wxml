@@ -7,7 +7,7 @@
   <view class="container">
     <!--左侧栏-->
     <view class="nav_left">
-      <block wx:for="{{cateItems}}">
+      <block wx:for="{{cateItems}}" wx:key="item.cate_id">
         <!--当前项的id等于item项的id，那个就是当前状态-->
         <!--用data-index记录这个数据在数组的下标位置，使用data-id设置每个item的id值，供打开2级页面使用-->
         <view class="nav_left_items {{curNav == item.cate_id ? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.cate_id}}">{{item.cate_name}}</view>
@@ -17,7 +17,7 @@
     <view class="nav_right">
       <!--如果有数据，才遍历项-->
       <view wx:if="{{cateItems[curIndex].ishaveChild}}">
-        <block wx:for="{{cateItems[curIndex].children}}">
+        <block wx:for="{{cateItems[curIndex].children}}" wx:key="curIndex + item.child_id">
           <view class="nav_right_items">
           <!--界面跳转 -->
             <navigator url="../redirect/redirect?cate_id={{curNav}}&child_id={{item.child_id}}">
@@ -33,41 +33,41 @@
   </view>
 </view>
 <view class="main_tab {{curTab==1?'show':'hide'}}">
-  <form class="send-form" bindsubmit="formSendSubmit" bindreset="formSendReset">
+  <form class="send-form" bindsubmit="formSendSubmit">
+    <view class="title">
+      发布我的招聘信息
+    </view>
     <view class="form-item">
-      <picker mode="selector" name="typePicker" bindchange="bindSendPickerChange" value="{{sendCurrentIndex}}" range="{{cateItems}}" range-key="cate_name">
+      <picker mode="selector" bindchange="bindSendPickerChange" value="{{sendCurrentIndex}}" range="{{cateItems}}" range-key="cate_name">
         <view class="picker">
           选择类别：{{cateItems[sendCurrentIndex].cate_name}}
         </view>
       </picker>
     </view>
     <view class="form-item" wx:if="{{cateItems[sendCurrentIndex].ishaveChild}}">
-      <picker mode="selector" name="typeSubPicker" bindchange="bindSendSubPickerChange" value="{{sendCurrentSubIndex}}" range="{{cateItems[sendCurrentIndex].children}}" range-key="name">
+      <picker mode="selector" bindchange="bindSendSubPickerChange" value="{{sendCurrentSubIndex}}" range="{{cateItems[sendCurrentIndex].children}}" range-key="name">
         <view class="picker">
           选择类目：{{cateItems[sendCurrentIndex].children[sendCurrentSubIndex].name}}
         </view>
       </picker>
     </view>
     <view class="form-item">
-      <input name="name" style="background-color: #FFFFFF" placeholder="请输入名称" />
+      <input name="name" value="{{sendFormDataname}}" style="background-color: #FFFFFF" placeholder="请输入工作名称" />
     </view>
     <view class="form-item">
-      <input name="text1" style="background-color: #FFFFFF" placeholder="请输入类型" />
+      <input name="price" value="{{sendFormDataprice}}" style="background-color: #FFFFFF" placeholder="请输入薪资" />
     </view>
     <view class="form-item">
-      <input name="text2" style="background-color: #FFFFFF" placeholder="请输入薪资" />
+      <input name="address" value="{{sendFormDataaddress}}" style="background-color: #FFFFFF" placeholder="请输入地址" />
     </view>
     <view class="form-item">
-      <input name="address" style="background-color: #FFFFFF" placeholder="请输入地址" />
+      <input name="time" value="{{sendFormDatatime}}" style="background-color: #FFFFFF" placeholder="请输入时间" />
     </view>
     <view class="form-item">
-      <input name="time" style="background-color: #FFFFFF" placeholder="请输入时间" />
+      <input name="phone" value="{{sendFormDataphone}}" style="background-color: #FFFFFF" placeholder="请输入电话" />
     </view>
     <view class="form-item">
-      <input name="phone" style="background-color: #FFFFFF" placeholder="请输入电话" />
-    </view>
-    <view class="form-item">
-      <input name="treatment" style="background-color: #FFFFFF" placeholder="请输入待遇" />
+      <input name="treatment" value="{{sendFormDatatreatment}}" style="background-color: #FFFFFF" placeholder="请输入待遇" />
     </view>
     <view class="form-item">
       <button form-type="submit">发布招聘</button>
@@ -94,31 +94,44 @@
     </block>
   </view>
   <view class="my-form" wx:if="{{hasUserInfo && myInfo}}">
-    <view wx:if="{{isEditingMyInfo}}">
+    <form bindsubmit="myInfoFormSubmi" wx:if="{{isEditingMyInfo}}">
       <view class="form-item">
-        <input value="{{myInfo.address}}" style="background-color: #eee" placeholder="请输入您的联系地址" />
+        <input value="{{myInfo.name}}" style="background-color: #eee" name="name" placeholder="请输入您的姓名" />
       </view>
       <view class="form-item">
-        <input value="{{myInfo.phone}}" style="background-color: #eee" placeholder="请输入您的联系电话" />
+        <input value="{{myInfo.address}}" style="background-color: #eee" name="address" placeholder="请输入您的联系地址" />
+      </view>
+      <view class="form-item">
+        <input value="{{myInfo.phone}}" style="background-color: #eee" name="phone" placeholder="请输入您的联系电话" />
       </view>
       <view class="form-item flex-center" style="margin-top:20px">
-        <button class="button-not-full" style="width:110px" bindtap="saveEditMyInfo">保存修改</button>
-        <button class="button-not-full" style="width:80px" bindtap="unsaveEditMyInfo">放弃</button>
+        <button formType="submit" class="show-author button-not-full" style="width:110px">保存修改</button>
+        <button formType="reset" class="button-not-full" style="width:80px" bindtap="unsaveEditMyInfo">放弃</button>
       </view>
-    </view>
+    </form>
     <view wx:else>
       <view class="info-item">
+        <text class="instr title">我的基本信息</text>
+      </view>
+      <view class="info-item">
+        <text class="instr">我的姓名</text>
+        <text class="val">{{myInfo.name?myInfo.name:'未填写'}}</text>
+      </view>
+      <view class="info-item">
         <text class="instr">我的地址</text>
-        <text class="val">{{myInfo.address}}</text>
+        <text class="val">{{myInfo.address?myInfo.address:'未填写'}}</text>
       </view>
       <view class="info-item">
         <text class="instr">我的联系电话</text>
-        <text class="val">{{myInfo.phone}}</text>
+        <text class="val">{{myInfo.phone?myInfo.phone:'未填写'}}</text>
       </view>
       <view class="form-item" style="margin-top:20px">
         <button class="show-author" bindtap="editMyInfo">修改信息</button>
       </view>
     </view>
+  </view>
+  <view class="my-form" wx:if="{{hasUserInfo && !myInfo}}">
+    <button class='show-author' style="font-size:13px" bindtap="loadMyInfo">您的登录已经过期，请重新登录</button>
   </view>
 </view>
 <!--底栏-->

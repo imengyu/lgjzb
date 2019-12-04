@@ -1,4 +1,7 @@
 const app = getApp()
+const config = require('../../utils/const.js')
+const request = require('../../utils/request.js')
+const utils = require('../../utils/utils.js')
 
 Page({
   data: {
@@ -105,23 +108,29 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
-    sendCurrentIndex: 0,
-    sendCurrentSubIndex: 0,
+    sendCurrentIndex: 1,
+    sendCurrentSubIndex: 1,
 
     //个人信息
     isEditingMyInfo: false,
-    myInfo: {
-      phone: '17606701376',
-      address: '地址地址地址地址地址地址'
-    },
+    myInfo: null,
+    sendFormDataname: '',
+    sendFormDataaddress: '',
+    sendFormDataprice: '',
+    sendFormDatatime: '',
+    sendFormDataphone: '',
+    sendFormDatatreatment: '',
+    
   },
   //事件处理函数  
   clickTab: function (e) {
     var that = this;
-    if (this.data.curTab == e.currentTarget.dataset.current) return false;
+    var tar = e.currentTarget.dataset.current;
+    if (tar == 1) this.loadMySendInfo();
+    if (this.data.curTab == tar) return false;
     else {
       that.setData({
-        curTab: e.currentTarget.dataset.current
+        curTab: tar
       })
     }
   },
@@ -146,20 +155,105 @@ Page({
       curIndex: index
     })
   },
-  editMyInfo: function (e) {
-    this.setData({ isEditingMyInfo: true })
+  loadMyInfo: function (e) {
+    var that = this;
+    request.request({
+      url: config.API_URL + '/myinfo',
+      method: 'get',
+      success: function (res) {
+        if (res.data.success){ 
+          that.setData({ 
+            myInfo: res.data.data,
+            sendFormDataname: '',
+            sendFormDataaddress: res.data.data.address,
+            sendFormDataprice: '',
+            sendFormDatatime: '',
+            sendFormDataphone: res.data.data.phone,
+            sendFormDatatreatment: '',
+          })
+        }
+        else wx.showToast({ title: '无法加载您的个人信息：' + res.data.message, icon: 'none' })
+      },
+      fail: function (res) {
+        wx.showToast({ title: '无法加载您的个人信息，请稍后重试', icon: 'none' })
+      },
+    })
   },
-  saveEditMyInfo: function (e) {
-
-
-    this.setData({ isEditingMyInfo: false })
+  loadMySendInfo: function (e) {
+    if (this.data.sendFormDataaddress == '' && this.data.sendFormDataphone == '')
+      this.setData({
+        sendFormDataaddress: this.data.myInfo.address,
+        sendFormDataphone: this.data.myInfo.phone,
+      })
   },
+  myInfoFormSubmi: function (data) {
+    var that = this;
+    request.request({
+      url: config.API_URL + '/myinfo',
+      method: 'post',
+      data: data.detail.value,
+      success: function (res) {
+        if (res.data.success) {
+          wx.showToast({ title: '修改成功' })
+          that.setData({ isEditingMyInfo: false })
+          that.loadMyInfo();
+        }
+        else wx.showToast({ title: '修改失败：' + res.data.message, icon: 'none' })
+      },
+      fail: function (res) {
+        wx.showToast({ title: '修改失败，请稍后重试', icon: 'none' })
+      },
+    })
+  },
+  formSendSubmit: function (data) {
+    var that = this;
+    var keys = Object.keys(data.detail.value);
+    for (var i = 0; i < keys.length;i++){
+      if (data.detail.value[keys[i]] == ''){
+        console.log(data.detail.value[keys[i]] + ' key : ' + keys[i]);
+        wx.showToast({ title: '请完善您的信息再发布哦', icon: 'none' })
+        return;
+      }
+    }
+
+    data.detail.value.parent_cate_id = this.data.sendCurrentIndex + 1;
+    data.detail.value.parent_child_id = this.data.sendCurrentSubIndex + 1;
+
+    wx.showLoading({ title: '正在提交，请稍后', })
+    request.request({
+      url: config.API_URL + '/jobs',
+      method: 'post',
+      data: data.detail.value,
+      success: function (res) {
+        if (res.data.success) {
+          that.setData({
+            sendFormDataname: '',
+            sendFormDataprice: '',
+            sendFormDatatime: '',
+            sendFormDatatreatment: '',
+          })
+          wx.hideLoading();
+          wx.showToast({ title: '发布成功' })
+        }
+        else wx.showToast({ title: res.data.message, icon: 'none' })
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({ title: '发布失败，请稍后重试', icon: 'none' })
+      },
+    })
+  },
+  editMyInfo: function (e) { this.setData({ isEditingMyInfo: true }) },
   unsaveEditMyInfo: function (e) {
     this.setData({ isEditingMyInfo: false })
+    this.loadMyInfo();
   },
+
+
   //加载
   onLoad: function () {
     if (app.globalData.userInfo) {
+      this.loadMyInfo();
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
@@ -168,6 +262,7 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
+        this.loadMyInfo();
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -178,6 +273,7 @@ Page({
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
+          this.loadMyInfo();
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true

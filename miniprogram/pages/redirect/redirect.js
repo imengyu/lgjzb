@@ -1,3 +1,6 @@
+const config = require('../../utils/const.js')
+const request = require('../../utils/request.js')
+
 Page({
   data: {
     child_id: 0,
@@ -17,18 +20,20 @@ Page({
   loadItems: function() {
     var that = this;
     that.setData({  loadStatus: 'loading' })
-    wx.request({
-      url: 'http://localhost:3010/getData?cate_id=' + that.data.cate_id + '&child_id=' + that.data.child_id,
+    request.request({
+      url: config.API_URL + '/jobs?cate_id=' + that.data.cate_id + '&child_id=' + that.data.child_id,
       data: 'get',
       header: {},
       method: 'GET',
       dataType: 'json',
-      responseType: 'text',
+      responseType: 'json',
       success: function(res) {
-        for (var i = 0; i < res.data.length; i++) 
-          res.data.open = false;
+        for (var i = 0; i < res.data.length; i++) {
+          res.data[i].open = false;
+          res.data[i].signuped = false;
+        }
         that.setData({
-          items: res.data,
+          items: res.data.data,
           loadStatus: 'loaded'
         })
       },
@@ -54,6 +59,27 @@ Page({
   },
   signIteUpm: function (e) {
     var id = e.currentTarget.dataset.id;
-    
+    wx.showLoading({ title: '正在提交，请稍后', })
+    request.request({
+      url: config.API_URL + '/sign-jobs/' + id,
+      method: 'post',
+      data: data.detail.value,
+      success: function (res) {
+        if (res.data.success) {
+          var index = e.currentTarget.dataset.index;
+          var param = {};
+          param['items[' + index + '].signuped'] = true;
+          this.setData(param)
+
+          wx.hideLoading();
+          wx.showToast({ title: '报名成功' })
+        }
+        else wx.showToast({ title: res.data.message, icon: 'none' })
+      },
+      fail: function (res) {
+        wx.hideLoading();
+        wx.showToast({ title: '报名失败，请稍后重试', icon: 'none' })
+      },
+    })
   },
 })

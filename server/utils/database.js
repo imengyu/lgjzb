@@ -1,5 +1,5 @@
-
-const mysql = require('mysql');
+const mysql = require('mysql')
+const logger = require('./logger')
 
 var connection = null;
 
@@ -18,7 +18,8 @@ function initMySqlConnection() {
         console.log('[Server] 数据库连接释放');
         connection = null;
     } else {
-        throw err;
+      logger.error('[Server] 无法连接数据库 ! 错误信息 : ' + err)
+      throw err;
     }
   });
   connection.connect();
