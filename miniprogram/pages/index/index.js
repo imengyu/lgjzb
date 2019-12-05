@@ -102,6 +102,7 @@ Page({
     curNav: 1,
     curIndex: 0,
     curTab: 0,
+    curTabInfo: 0,
 
     //用户数据
     userInfo: {},
@@ -120,20 +121,16 @@ Page({
     sendFormDatatime: '',
     sendFormDataphone: '',
     sendFormDatatreatment: '',
+
+    //交流信息数据
+    loadStatusSigned: 'loading',
+    loadStatusMine: 'loading',
+    itemsMine: null,
+    itemsSigned: null,
+
     
   },
   //事件处理函数  
-  clickTab: function (e) {
-    var that = this;
-    var tar = e.currentTarget.dataset.current;
-    if (tar == 1) this.loadMySendInfo();
-    if (this.data.curTab == tar) return false;
-    else {
-      that.setData({
-        curTab: tar
-      })
-    }
-  },
   bindSendPickerChange: function (e) {
     this.setData({
       sendCurrentIndex: e.detail.value,
@@ -155,6 +152,228 @@ Page({
       curIndex: index
     })
   },
+  switchMainTab: function (e) {
+    var that = this;
+    var tar = e.currentTarget.dataset.current;
+    if (that.data.curTab == tar) return false;
+    else {
+      if (tar == 1) that.loadMySendInfo();
+      else if (tar == 2) { 
+        that.loadDataSigned();
+        that.loadDataMine();
+      }
+      that.setData({
+        curTab: tar
+      })
+    }
+  },
+  switchInfoTab: function (e) {
+    var that = this;
+    var tar = e.currentTarget.dataset.current;
+    if (this.data.curTabInfo == tar) return false;
+    else {
+      if (tar == 0) this.loadDataSigned();
+      else if (tar == 1) this.loadDataMine();
+      that.setData({
+        curTabInfo: tar
+      })
+    }
+  },
+  switchExpandItem: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var type = e.currentTarget.dataset.type;
+    var expand = e.currentTarget.dataset.expand;
+    var param = {};
+    param[type + '[' + index + '].open'] = expand;
+    this.setData(param)
+  },
+
+  bindTapRelaodSigned: function (e) {
+    this.loadDataSigned();
+  },
+  bindTapRelaodMine: function (e) {
+    this.loadDataMine();
+  },
+
+  conformNoSignItem: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '您确认驳回 Ta 的工作请求？工作将重新返回市场，等待下一个人的报名',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在提交，请稍后', })
+          request.request({
+            url: config.API_URL + '/contract-signup-job/' + id + '?contract=false',
+            method: 'post',
+            success: function (res) {
+              if (res.data.success) {
+                wx.hideLoading();
+                wx.showToast({ title: '操作成功' })
+                that.loadDataMine();
+              }
+              else wx.showToast({ title: res.data.message, icon: 'none' })
+            },
+            fail: function (res) {
+              wx.hideLoading();
+              wx.showToast({ title: '操作失败，请稍后重试', icon: 'none' })
+            },
+          })
+        }
+      }
+    })
+  },
+  conformSignItem: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '您确认要与 Ta 签订合同？',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在提交，请稍后', })
+          request.request({
+            url: config.API_URL + '/contract-signup-job/' + id + '?contract=true',
+            method: 'post',
+            success: function (res) {
+              if (res.data.success) {
+                wx.hideLoading();
+                wx.showToast({ title: '操作成功' })
+                that.loadDataMine();
+              }
+              else wx.showToast({ title: res.data.message, icon: 'none' })
+            },
+            fail: function (res) {
+              wx.hideLoading();
+              wx.showToast({ title: '操作失败，请稍后重试', icon: 'none' })
+            },
+          })
+        }
+      }
+    })
+   
+    
+  },
+  unsignItem: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '您确认取消报名此工作？',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在提交，请稍后', })
+          request.request({
+            url: config.API_URL + '/cancel-signup-job/' + id,
+            method: 'post',
+            success: function (res) {
+              if (res.data.success) {
+                wx.hideLoading();
+                wx.showToast({ title: '操作成功' })
+                that.loadDataSigned();
+              }
+              else wx.showToast({ title: res.data.message, icon: 'none' })
+            },
+            fail: function (res) {
+              wx.hideLoading();
+              wx.showToast({ title: '操作失败，请稍后重试', icon: 'none' })
+            },
+          })
+        }
+      }
+    })
+  },
+  deleteItem: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '您确认取消删除此工作？',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在提交，请稍后', })
+          request.request({
+            url: config.API_URL + '/jobs/' + id,
+            method: 'delete',
+            success: function (res) {
+              if (res.data.success) {
+                wx.hideLoading();
+                wx.showToast({ title: '删除成功' })
+                that.loadDataSigned();
+              }
+              else wx.showToast({ title: res.data.message, icon: 'none' })
+            },
+            fail: function (res) {
+              wx.hideLoading();
+              wx.showToast({ title: '删除失败，请稍后重试', icon: 'none' })
+            },
+          })
+        }
+      }
+    })
+  },
+
+  /* 数据加载方法 */
+
+  loadDataSigned: function (e) {
+    var that = this;
+    that.setData({ loadStatusSigned: 'loading' })
+    request.request({
+      url: config.API_URL + '/user/' + app.globalData.userInfoServerId + '/signs',
+      data: 'get',
+      header: {},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'json',
+      success: function (res) {
+        if (res.data.data && res.data.data.length  > 0)
+          that.setData({
+            itemsSigned: res.data.data,
+            loadStatusSigned: 'loaded'
+          })
+        else that.setData({
+          itemsSigned: null,
+          loadStatusSigned: 'none'
+        })
+      },
+      fail: function (res) {
+        that.setData({
+          loadStatusSigned: 'failed'
+        });
+      },
+    })
+  },
+  loadDataMine: function (e) {
+    var that = this;
+    that.setData({ loadStatusMine: 'loading' })
+    request.request({
+      url: config.API_URL + '/user/' + app.globalData.userInfoServerId + '/jobs',
+      data: 'get',
+      header: {},
+      method: 'GET',
+      dataType: 'json',
+      responseType: 'json',
+      success: function (res) {
+        if (res.data.data && res.data.data.length > 0)
+          that.setData({
+            itemsMine: res.data.data,
+            loadStatusMine: 'loaded'
+          })
+        else
+          that.setData({
+            itemsMine: null,
+            loadStatusMine: 'none'
+          })
+      },
+      fail: function (res) {
+        that.setData({
+          loadStatusMine: 'failed'
+        });
+      },
+    })
+  },
+
   loadMyInfo: function (e) {
     var that = this;
     request.request({
@@ -175,7 +394,7 @@ Page({
         else wx.showToast({ title: '无法加载您的个人信息：' + res.data.message, icon: 'none' })
       },
       fail: function (res) {
-        wx.showToast({ title: '无法加载您的个人信息，请稍后重试', icon: 'none' })
+        wx.showToast({ title: '无法连接服务器，请稍后重试', icon: 'none' })
       },
     })
   },
@@ -186,7 +405,10 @@ Page({
         sendFormDataphone: this.data.myInfo.phone,
       })
   },
-  myInfoFormSubmi: function (data) {
+
+  /* 表单提交方法 */
+
+  myInfoFormSubmit: function (data) {
     var that = this;
     request.request({
       url: config.API_URL + '/myinfo',
@@ -248,7 +470,6 @@ Page({
     this.setData({ isEditingMyInfo: false })
     this.loadMyInfo();
   },
-
 
   //加载
   onLoad: function () {

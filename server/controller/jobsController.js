@@ -5,10 +5,12 @@ module.exports = {
    */
   createRoutes(app) {
     app.get('/jobs', getJobsHandler);
-    app.get('/user/:id/jobs', getJobsByUserHandler);
-    app.get('/user/:id/signs', getSignJobsByUserHandler);
+    app.get('/user/:uid/jobs', getJobsByUserHandler);
+    app.get('/user/:uid/signs', getSignJobsByUserHandler);
     app.post('/signup-job/:id', signJobHandler);
     app.post('/cancel-signup-job/:id', unsignJobHandler);
+    app.post('/contract-signup-job/:id', contrctJobHandler);
+
     app.post('/jobs', postJobsHandler)
     app.delete('/jobs/:id', deleteJobsHandler)
   }
@@ -57,12 +59,18 @@ function signJobHandler(req, res) {
     return;
   }
 
-  jobsServices.getJobSigned(authServices.getLoggedUserId(req), req.params.id, (signed) => {
+  var job_id = req.params.id;
+  var current_uid = authServices.getLoggedUserId(req);
+
+  jobsServices.getJobSigned(current_uid, job_id, (signed) => {
     if(signed) common.sendFailed(res, '您已经报名此工作');
     else {
-      jobsServices.signJob(authServices.getLoggedUserId(req), req.params.id, (success) => {
-        if(success) common.sendSuccess(res, '报名成功');
-        else common.sendFailed(res, '报名失败，请稍后再试');
+      jobsServices.getJobUid(job_id, (uid) => {
+        if(uid == current_uid) common.sendFailed(res, '您不能报名自己发布的工作');
+        else jobsServices.signJob(current_uid, job_id, (success) => {
+          if(success) common.sendSuccess(res, '报名成功');
+          else common.sendFailed(res, '报名失败，请稍后再试');
+        });
       });
     }
   })
@@ -84,8 +92,38 @@ function unsignJobHandler(req, res) {
     if(!signed) common.sendFailed(res, '您没有报名此工作');
     else {
       jobsServices.signJob(authServices.getLoggedUserId(req), req.params.id, (success) => {
-        if(success) common.sendSuccess(res, '报名成功');
-        else common.sendFailed(res, '报名失败，请稍后再试');
+        if(success) common.sendSuccess(res, '取消报名成功');
+        else common.sendFailed(res, '取消报名失败，请稍后再试');
+      });
+    }
+  })
+
+}
+/**
+ * 工作签订合同
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+function contrctJobHandler(req, res) {
+
+  var contract = req.query.contract == 'true';
+  var job_id = req.params.id;
+
+  if(!job_id) {
+    common.sendFailed(res, '参数不合法');
+    return;
+  }
+  if(!authServices.checkUserAuthed(req)) {
+    common.sendFailed(res, '未登录，请登录后操作');
+    return;
+  }
+
+  jobsServices.getJobUid(job_id, (id) => {
+    if(id != authServices.getLoggedUserId(req)) common.sendFailed(res, '您无法操作他人的工作');
+    else {
+      jobsServices.contractJob(job_id, contract, (success) => {
+        if(success) common.sendSuccess(res, '成功');
+        else common.sendFailed(res, '操作失败，请稍后再试');
       });
     }
   })

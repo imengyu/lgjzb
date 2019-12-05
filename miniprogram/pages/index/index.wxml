@@ -1,8 +1,10 @@
+<!--头部-->
 <view class="main">
   <!-- 公共头部 -->
   <MyTitle></MyTitle>
 </view>
-<view class="main_tab {{curTab==0?'show':'hide'}}">
+<!--兼职-->
+<view class="main_tab full {{curTab==0?'show':'hide'}}">
   <!--主盒子-->
   <view class="container">
     <!--左侧栏-->
@@ -32,6 +34,7 @@
     </view>
   </view>
 </view>
+<!--招聘-->
 <view class="main_tab {{curTab==1?'show':'hide'}}">
   <form class="send-form" bindsubmit="formSendSubmit">
     <view class="title">
@@ -74,9 +77,96 @@
     </view>
   </form>
 </view>
+<!--信息-->
 <view class="main_tab {{curTab==2?'show':'hide'}}">
-信息
+  <view class="info-tab">
+    <view class="item {{curTabInfo==0?'active':''}}" data-current="0" bindtap="switchInfoTab">我报名的</view>
+    <view class="item {{curTabInfo==1?'active':''}}" data-current="1" bindtap="switchInfoTab">我发布的</view>
+  </view>
+  <view class="info-page {{curTabInfo==0?'show':'hide'}}">
+    <view wx:if="{{loadStatusSigned=='failed'}}" class="status-area">
+      <text>哎呀，加载失败了！</text>
+      <button class="reload-button" bindtap="bindTapRelaodSigned">重试</button>
+    </view>
+    <view wx:if="{{loadStatusSigned=='loading'}}" class="status-area">
+      <text>正在加载</text>
+    </view>
+    <view wx:if="{{loadStatusSigned=='none'}}" class="status-area">
+      <text>您还没有报名工作哦</text>
+      <button class="reload-button" data-current="0" bindtap="switchMainTab">立即找工作</button>
+    </view>
+    <view class="job-list" wx:if="{{itemsSigned}}">
+      <block wx:for="{{itemsSigned}}" wx:for-index="bindex" wx:key="bindex">
+        <view class="item">
+          <view class="left">
+            <text class="title">{{item.name}}</text>
+            <text class="price">{{item.price}}</text>
+          </view>
+          <view class="expand-area">
+            <text class="text">地址：{{item.address}}</text>
+            <text class="text">时间：{{item.time}}</text>
+            <text class="text">电话：{{item.phone}}</text>
+            <text class="text">待遇：{{item.treatment}}</text>
+            <text class="text small">发布时间：{{item.add_time}}</text>
+            <text class="text">您已报名此工作，正在等待发布者接受</text>
+            <button class="signup" bindtap="unsignItem" id="{{item.id}}" data-index="{{bindex}}">取消报名</button>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="info-page {{curTabInfo==1?'show':'hide'}}">
+    <view wx:if="{{loadStatusMine=='failed'}}" class="status-area">
+      <text>哎呀，加载失败了！</text>
+      <button class="reload-button" bindtap="bindTapRelaodMine">重试</button>
+    </view>
+    <view wx:if="{{loadStatusMine=='loading'}}" class="status-area">
+      <text>正在加载</text>
+    </view>
+    <view wx:if="{{loadStatusMine=='none'}}" class="status-area">
+      <text>您还没有发布过工作信息哦</text>
+      <button class="reload-button" data-current="1" bindtap="switchMainTab">立即发布</button>
+    </view>
+    <view class="job-list" wx:if="{{itemsMine}}">
+      <block wx:for="{{itemsMine}}" wx:for-index="bindex" wx:key="bindex">
+        <view class="item">
+          <view class="left">
+            <text class="title">{{item.name}}</text>
+            <text class="price">{{item.price}}</text>
+          </view>
+          <button wx:if="{{item.open}}" class="detail collapse" bindtap="switchExpandItem" data-index="{{bindex}}" data-expand="{{false}}" data-type="itemsMine">收起</button>
+          <button wx:else class="detail" bindtap="switchExpandItem" data-type="itemsMine" data-index="{{bindex}}" data-expand="{{true}}">详情</button>
+          <view class="status-sign" wx:if="{{item.status==2}}">有人报名啦</view>
+          <image wx:if="{{item.status==3}}" src="/images/yqd.png" class="status-signed" ></image>
+          <view wx:if="{{item.open}}" class="expand-area">
+            <text class="text">地址：{{item.address}}</text>
+            <text class="text">时间：{{item.time}}</text>
+            <text class="text">电话：{{item.phone}}</text>
+            <text class="text">待遇：{{item.treatment}}</text>
+            <text class="text small">发布时间：{{item.add_time}}</text>
+            <view wx:if="{{item.status==2}}" class="expand-area">
+              <text class="price">Ta 报名了您的工作</text>
+              <text class="text">姓名：{{item.signed.name}}</text>
+              <text class="text">电话：{{item.signed.phone}}</text>
+              <text class="text">地址：{{item.signed.address}}</text>
+              <button class="signup" bindtap="conformSignItem" data-id="{{item.id}}" data-index="{{bindex}}">与 Ta 签订合同</button>
+              <button class="signup secondary" bindtap="conformNoSignItem" data-id="{{item.id}}" data-index="{{bindex}}">不满意 Ta ? 不签订</button>
+              
+            </view>
+            <view wx:if="{{item.status==3}}"> 
+              <text style="display:block;margin:8px 0">您已经与 Ta 签订合同，当前工作已完成使命</text>
+              <button class="signup" bindtap="deleteItem" data-id="{{item.id}}">点击这里删除此职位</button>
+            </view>
+            <view wx:if="{{item.status==1}}"> 
+              <button class="signup ed" bindtap="deleteItem" data-id="{{item.id}}" data-index="{{bindex}}">删除此工作</button>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
 </view>
+<!--我的-->
 <view class="main_tab {{curTab==3?'show':'hide'}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
   <view class="my">
     <block wx:if="{{!hasUserInfo && canIUse}}">
@@ -94,7 +184,7 @@
     </block>
   </view>
   <view class="my-form" wx:if="{{hasUserInfo && myInfo}}">
-    <form bindsubmit="myInfoFormSubmi" wx:if="{{isEditingMyInfo}}">
+    <form bindsubmit="myInfoFormSubmit" wx:if="{{isEditingMyInfo}}">
       <view class="form-item">
         <input value="{{myInfo.name}}" style="background-color: #eee" name="name" placeholder="请输入您的姓名" />
       </view>
@@ -131,24 +221,27 @@
     </view>
   </view>
   <view class="my-form" wx:if="{{hasUserInfo && !myInfo}}">
-    <button class='show-author' style="font-size:13px" bindtap="loadMyInfo">您的登录已经过期，请重新登录</button>
+    <button class='show-author' style="font-size:13px" bindtap="loadMyInfo">
+      <text>您的登录已经过期</text>
+      <text>请重新登录</text>
+    </button>
   </view>
 </view>
 <!--底栏-->
 <view class="footbar">
-  <view class="item {{curTab==0?'active':''}}" data-current="0" bindtap="clickTab">
+  <view class="item {{curTab==0?'active':''}}" data-current="0" bindtap="switchMainTab">
     <image src="/images/sc.png"></image>
     <text>兼职</text>
   </view>
-  <view class="item {{curTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+  <view class="item {{curTab==1?'active':''}}" data-current="1" bindtap="switchMainTab">
     <image src="/images/fb.png"></image>
     <text>招聘</text>
   </view>
-  <view class="item {{curTab==2?'active':''}}" data-current="2" bindtap="clickTab">
+  <view class="item {{curTab==2?'active':''}}" data-current="2" bindtap="switchMainTab">
     <image src="/images/kh.png"></image>
     <text>信息</text>
   </view>
-  <view class="item {{curTab==3?'active':''}}" data-current="3" bindtap="clickTab">
+  <view class="item {{curTab==3?'active':''}}" data-current="3" bindtap="switchMainTab">
     <image src="/images/wd.png"></image>
     <text>我的</text>
   </view>

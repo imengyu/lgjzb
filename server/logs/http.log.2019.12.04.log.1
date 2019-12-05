@@ -1,0 +1,295 @@
+[2019-12-04T14:58:23.184] [ERROR] default - [Server] Can not connect to mysql server ! Err : Error: Cannot enqueue Handshake after already enqueuing a Handshake. []
+[2019-12-04T14:58:23.187] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T14:59:13.100] [ERROR] default - [Server] Can not connect to mysql server ! Err : Error: Cannot enqueue Handshake after already enqueuing a Handshake. []
+[2019-12-04T14:59:13.104] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:00:10.967] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:00:14.985] [INFO] default - 
+[2019-12-04T15:01:20.149] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:37:54.647] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:45:14.433] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:47:25.206] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:48:08.482] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:51:40.592] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:55:48.631] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:57:03.089] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T15:58:03.032] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:01:54.148] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:02:17.704] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:02:39.679] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:04:50.785] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:05:31.095] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:08:14.105] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:08:34.068] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:09:16.057] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:10:14.205] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:10:18.984] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_NO_SUCH_TABLE: Table 'jzapi.t_users' doesn't exist
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_NO_SUCH_TABLE',
+    errno: 1146,
+    sqlMessage: "Table 'jzapi.t_users' doesn't exist",
+    sqlState: '42S02',
+    index: 0,
+    sql: 'SELECT wx_openid,id FROM t_users WHERE wx_openid=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:12:41.705] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:12:46.396] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_NO_SUCH_TABLE: Table 'jzapi.t_users' doesn't exist
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_NO_SUCH_TABLE',
+    errno: 1146,
+    sqlMessage: "Table 'jzapi.t_users' doesn't exist",
+    sqlState: '42S02',
+    index: 0,
+    sql: 'SELECT wx_openid,id FROM t_users WHERE wx_openid=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:13:07.516] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:13:14.185] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_NO_SUCH_TABLE: Table 'jzapi.t_users' doesn't exist
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_NO_SUCH_TABLE',
+    errno: 1146,
+    sqlMessage: "Table 'jzapi.t_users' doesn't exist",
+    sqlState: '42S02',
+    index: 0,
+    sql: 'SELECT wx_openid,id FROM t_users WHERE wx_openid=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:13:27.731] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:13:34.887] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_NO_SUCH_TABLE: Table 'jzapi.t_users' doesn't exist
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_NO_SUCH_TABLE',
+    errno: 1146,
+    sqlMessage: "Table 'jzapi.t_users' doesn't exist",
+    sqlState: '42S02',
+    index: 0,
+    sql: 'SELECT wx_openid,id FROM t_users WHERE wx_openid=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:14:35.306] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:14:46.808] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_BAD_FIELD_ERROR: Unknown column 'oKbH74sSE4nrmMJl40Ze3Fw6VhKw' in 'where clause'
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_BAD_FIELD_ERROR',
+    errno: 1054,
+    sqlMessage: "Unknown column 'oKbH74sSE4nrmMJl40Ze3Fw6VhKw' in 'where clause'",
+    sqlState: '42S22',
+    index: 0,
+    sql: 'SELECT open_id,id FROM t_user WHERE open_id=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:15:28.932] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:15:33.160] [ERROR] default - checkUserExistsByWeixinOpenId failed !  [
+  Error: ER_BAD_FIELD_ERROR: Unknown column 'oKbH74sSE4nrmMJl40Ze3Fw6VhKw' in 'where clause'
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.checkUserExistsByWeixinOpenId (E:\Programming\WebProjects\lgjzb\server\service\userServices.js:11:32)
+      at Request._callback (E:\Programming\WebProjects\lgjzb\server\controller\userContoller.js:45:22)
+      at Request.self.callback (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:185:22)
+      at Request.emit (events.js:203:13)
+      at Request.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1161:10)
+      at Request.emit (events.js:203:13)
+      at IncomingMessage.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\request\request.js:1083:12)
+      at Object.onceWrapper (events.js:291:20) {
+    code: 'ER_BAD_FIELD_ERROR',
+    errno: 1054,
+    sqlMessage: "Unknown column 'oKbH74sSE4nrmMJl40Ze3Fw6VhKw' in 'where clause'",
+    sqlState: '42S22',
+    index: 0,
+    sql: 'SELECT open_id,id FROM t_user WHERE open_id=oKbH74sSE4nrmMJl40Ze3Fw6VhKw'
+  }
+]
+[2019-12-04T16:17:19.029] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:41:31.942] [INFO] default - [Request] GET /myinfo / ::1 []
+[2019-12-04T16:41:49.513] [INFO] default - [Request] GET /myinfo / ::1 []
+[2019-12-04T16:42:07.706] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:43:36.470] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:44:10.782] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:49:08.632] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:57:51.591] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T16:59:30.625] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:16:16.460] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:17:04.104] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:17:22.442] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:17:24.260] [ERROR] default - postJob failed !  [
+  Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"parent_cate_id","parent_child_id","name","price","address","time","phone","trea' at line 1
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.postJob (E:\Programming\WebProjects\lgjzb\server\service\jobsServices.js:61:32)
+      at postJobsHandler (E:\Programming\WebProjects\lgjzb\server\controller\jobsController.js:45:16)
+      at Layer.handle [as handle_request] (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\layer.js:95:5)
+      at next (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\route.js:137:13)
+      at Route.dispatch (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\route.js:112:3)
+      at Layer.handle [as handle_request] (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\layer.js:95:5)
+      at E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\index.js:281:22
+      at Function.process_params (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\index.js:335:12) {
+    code: 'ER_PARSE_ERROR',
+    errno: 1064,
+    sqlMessage: `You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"parent_cate_id","parent_child_id","name","price","address","time","phone","trea' at line 1`,
+    sqlState: '42000',
+    index: 0,
+    sql: `INSERT INTO t_jobs("parent_cate_id","parent_child_id","name","price","address","time","phone","treatment","uid") VALUES(0,0,'小学辅导老师','10/天','浙江衢州','周一至周五18:00-19:00','17606701376','无',3)`
+  }
+]
+[2019-12-04T17:18:36.625] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:18:41.226] [ERROR] default - postJob failed !  [
+  Error: ER_NO_DEFAULT_FOR_FIELD: Field 'add_time' doesn't have a default value
+      at Query.Sequence._packetToError (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Sequence.js:47:14)
+      at Query.ErrorPacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\sequences\Query.js:77:18)
+      at Protocol._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+      at Parser._parsePacket (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:433:10)
+      at Parser.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Parser.js:43:10)
+      at Protocol.write (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:91:28)
+      at Socket.<anonymous> (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:525:10)
+      at Socket.emit (events.js:203:13)
+      at addChunk (_stream_readable.js:294:12)
+      --------------------
+      at Protocol._enqueue (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\protocol\Protocol.js:144:48)
+      at Connection.query (E:\Programming\WebProjects\lgjzb\server\node_modules\mysql\lib\Connection.js:201:25)
+      at Object.postJob (E:\Programming\WebProjects\lgjzb\server\service\jobsServices.js:55:32)
+      at postJobsHandler (E:\Programming\WebProjects\lgjzb\server\controller\jobsController.js:45:16)
+      at Layer.handle [as handle_request] (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\layer.js:95:5)
+      at next (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\route.js:137:13)
+      at Route.dispatch (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\route.js:112:3)
+      at Layer.handle [as handle_request] (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\layer.js:95:5)
+      at E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\index.js:281:22
+      at Function.process_params (E:\Programming\WebProjects\lgjzb\server\node_modules\express\lib\router\index.js:335:12) {
+    code: 'ER_NO_DEFAULT_FOR_FIELD',
+    errno: 1364,
+    sqlMessage: "Field 'add_time' doesn't have a default value",
+    sqlState: 'HY000',
+    index: 0,
+    sql: "INSERT INTO t_jobs(parent_cate_id,parent_child_id,name,price,address,time,phone,treatment,uid) VALUES(0,0,'小学辅导老师','10/天','浙江衢州','周一至周五18:00-19:00','17606701376','无',3)"
+  }
+]
+[2019-12-04T17:20:22.269] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T17:21:11.842] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T20:25:55.220] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T20:29:24.595] [INFO] default - [Server] App listening on port 3010! []
+[2019-12-04T20:30:01.049] [INFO] default - [Server] App listening on port 3010! []

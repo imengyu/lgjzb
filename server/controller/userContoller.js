@@ -7,6 +7,7 @@ module.exports = {
     app.post('/login', doLoginHandler);
     app.get('/login', checkAuthedHandler);
     app.get('/myinfo', getUserInfoHandler);
+    app.get('/user/:uid/info', getUserInfoByIdHandler);
     app.post('/myinfo', updateUserInfoHandler);
   }
 }
@@ -106,4 +107,27 @@ function updateUserInfoHandler(req, res) {
     if(success) common.sendSuccess(res, '修改成功', null);    
     else common.sendFailed(res, '修改失败！服务器错误', null, 500);
   });
+}
+/**
+ * 获取当前用户信息
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+function getUserInfoByIdHandler(req, res) {
+
+  var uid = req.param.uid;
+
+  if(!uid) {
+    common.sendFailed(res, '参数错误');
+    return;
+  }
+  if(!authServices.checkUserAuthed(req)) {
+    common.sendFailed(res, '未登录，请登录后操作');
+    return;
+  }
+
+  userServices.getUserInfo(uid, (data) => {
+    if(data) common.sendSuccess(res, '成功', data);
+    else common.sendFailed(res, '找不到用户信息', null, 404);
+  })
 }

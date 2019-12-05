@@ -2,6 +2,8 @@ const connection = require('../utils/database');
 const common = require('../utils/common')
 const logger = require("../utils/logger");
 
+const userServices = require("../service/userServices");
+
 module.exports = {
 
   /**
@@ -59,6 +61,20 @@ module.exports = {
         }
         return cp;
       })
+
+      //获取已报名用户的信息
+      for(var i =0 ;i<results.length;i++){
+        if(results[i].signup_uid > 0) {
+          userServices.getUserInfo(results[i].signup_uid, (data) => {
+            if(data) results[i].signed = {
+              name: data.name,
+              phone: data.phone,
+              address: data.address,
+            }
+          })
+        }
+      }
+
       common.sendSuccess(res, '成功', results);
     })
   },
@@ -74,7 +90,7 @@ module.exports = {
     }
   
     //查询mysql来取得数据
-    connection.getConnection().query('SELECT * FROM t_jobs WHERE uid = ' + uid, (err, results) => {
+    connection.getConnection().query('SELECT * FROM t_jobs WHERE signup_uid = ' + uid, (err, results) => {
   
       //排序 按 add_time 降序排序
       results.sort((a,b) => {
@@ -87,6 +103,7 @@ module.exports = {
         }
         return cp;
       })
+
       common.sendSuccess(res, '成功', results);
     })
   },
@@ -97,7 +114,7 @@ module.exports = {
    * @param {(exists:boolean)=>void} callback 回调
    */
   getJobSigned(uid, job_id, callback) {
-    connection.getConnection().query('SELECT * FROM t_jobs WHERE id = ' + job_id, (err, results) => {
+    connection.getConnection().query('SELECT * FROM t_jobs WHERE status = 1 AND id = ' + job_id, (err, results) => {
       callback(results && results.length > 0 && results[0].signup_uid == uid)
     })
   },
@@ -119,8 +136,8 @@ module.exports = {
    * @param {(success:boolean)=>void} callback 回调
    */
   signJob(uid, job_id, callback) {
-    connection.getConnection().query('UPDATE t_jobs SET signup_uid=?,status=2 WHERE id=?', 
-      [ uid, job_id ], (error, results, fields) => {
+    connection.getConnection().query('UPDATE t_jobs SET signup_uid=?,status=? WHERE id=?', 
+      [ uid, 2, job_id ], (error, results, fields) => {
       if (error) { callback(false); logger.error('signJob failed ! ', error); }
       else callback(true)
     });
@@ -131,9 +148,22 @@ module.exports = {
    * @param {(success:boolean)=>void} callback 回调
    */
   unsignJob(job_id, callback) {
-    connection.getConnection().query('UPDATE t_jobs SET signup_uid=0,status=1 WHERE id=?', 
-      [ job_id ], (error, results, fields) => {
+    connection.getConnection().query('UPDATE t_jobs SET signup_uid=?,status=? WHERE id=?', 
+      [ 0, 1, job_id ], (error, results, fields) => {
       if (error) { callback(false); logger.error('unsignJob failed ! ', error); }
+      else callback(true)
+    });
+  },
+  /**
+   * 签订工作合同/取消
+   * @param {number} job_id 工作id
+   * @param {boolean} sign 是否签订
+   * @param {(success:boolean)=>void} callback 回调
+   */
+  contractJob(job_id, sign, callback) {
+    connection.getConnection().query('UPDATE t_jobs SET status=? WHERE id=?', 
+      [ sign ? 3 : 1, job_id ], (error, results, fields) => {
+      if (error) { callback(false); logger.error('contractJob failed ! ', error); }
       else callback(true)
     });
   },

@@ -2,6 +2,7 @@ page,view,image,swiper,swiper-navigator,video{
   box-sizing: border-box
 }
 
+/* status area */
 .status-area {
   padding: 20px;
   display: flex;
@@ -25,4 +26,109 @@ page,view,image,swiper,swiper-navigator,video{
   color: #fff;
   background-color: #eb1b00;
   padding: 5px 10px;
+}
+
+
+/* Job list */
+.job-list .item {
+  position: relative;  
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+.job-list .left {
+  width: calc(100% - 60px);
+}
+.job-list .title {
+  font-size: 16px;
+  color: #000;
+  display: block;
+}
+.job-list .text {
+  font-size: 14px;
+  color: #b1b1b1;
+  display: block;
+}
+.job-list .text.small {
+  margin-top: 6px;
+  font-size: 12px;
+}
+.job-list .price {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #f82500;
+}
+.job-list .detail {
+  position: absolute;
+  top: 26px;
+  right: 15px;
+  display: inline-block;
+  background-color: #f82500;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #fff;
+  width: 50px!important;
+  height: 30px!important;
+  min-height: unset!important;
+  font-size: 14px;
+}
+.job-list .detail.collapse {
+  background-color: #b1b1b1;
+}
+.job-list .detail:active {
+  background-color: #c51e00;
+}
+.job-list .status-sign {
+  position: absolute;
+  top: 25px;
+  right: 80px;
+  display: inline-block;
+  background-color: #00be0a;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #fff;
+}
+.job-list .status-signed {
+  position: absolute;
+  top: 10px;
+  right: 85px;
+  width: 60px;
+  height: 60px;
+}
+.signup {
+  display: block;
+  background-color: #f82500;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 20px;
+  height: 30px!important;
+  min-height: unset!important;
+  font-size: 14px;
+}
+.signup.ed {
+  background-color: #aa1a00;
+}
+.signup.secondary {
+  background-color: #c96b5a;
+}
+.signup:active {
+  background-color: #c51e00;
+}
+.job-list .expand-area {
+  position: relative;  
+  padding: 15px 20px;
+}
+
+/* Buttons */
+.show-author {
+  background-color: #e92121;
+  color: #fff;
+}
+.show-author text {
+  display: block;
+}
+.show-author .note {
+  font-size: 13px;
+  color: #d3d3d3;
 }

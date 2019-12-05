@@ -1,16 +1,19 @@
 const config = require('../../utils/const.js')
 const request = require('../../utils/request.js')
+const app = getApp()
 
 Page({
   data: {
     child_id: 0,
     cate_id: 0,
     loadStatus: 'loading',
+    current_uid: 0,
   },
   onLoad: function (options) {
     this.setData({
       child_id: options.child_id,
-      cate_id: options.cate_id
+      cate_id: options.cate_id,
+      current_uid: app.globalData.userInfoServerId
     });
     this.loadItems();
   },
@@ -61,9 +64,8 @@ Page({
     var id = e.currentTarget.dataset.id;
     wx.showLoading({ title: '正在提交，请稍后', })
     request.request({
-      url: config.API_URL + '/sign-jobs/' + id,
+      url: config.API_URL + '/signup-job/' + id,
       method: 'post',
-      data: data.detail.value,
       success: function (res) {
         if (res.data.success) {
           var index = e.currentTarget.dataset.index;
