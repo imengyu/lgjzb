@@ -195,13 +195,20 @@ function deleteJobsRealHandler(req, res) {
     common.sendFailed(res, '未登录，请登录后操作');
     return;
   }
-  jobsServices.getJobSignUid(job_id, (uid) => {
-    if(authServices.getLoggedUserId(req) != uid) common.sendFailed(res, '无法删除他人 (' + uid + ') 的工作');
+  jobsServices.getJobById(job_id, (job) => {
+    if(authServices.getLoggedUserId(req) != job.signui_uid) common.sendFailed(res, '无法删除他人 (' + uid + ') 的工作');
     else {
-      jobsServices.deleteJobReal(job_id, (success) => {
-        if(success) common.sendSuccess(res, '删除成功');
-        else common.sendFailed(res, '删除失败，请稍后再试');
-      });
+      if(job.status == 3){
+        jobsServices.deleteJobByUser(job_id, (success) => {
+          if(success) common.sendSuccess(res, '删除成功');
+          else common.sendFailed(res, '删除失败，请稍后再试');
+        });
+      }else if(job.status == 5){
+        jobsServices.deleteJobReal(job_id, (success) => {
+          if(success) common.sendSuccess(res, '删除成功');
+          else common.sendFailed(res, '删除失败，请稍后再试');
+        });
+      }else common.sendFailed(res, '删除失败，状态不对');
     }
   })
 }

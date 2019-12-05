@@ -137,7 +137,7 @@ module.exports = {
     }
   
     //查询mysql来取得数据
-    connection.getConnection().query('SELECT * FROM t_jobs WHERE signup_uid = ' + uid, (err, results) => {
+    connection.getConnection().query('SELECT * FROM t_jobs WHERE deleted_by_user = 0 AND signup_uid = ' + uid, (err, results) => {
   
       //排序 按 add_time 降序排序
       results.sort((a,b) => {
@@ -152,6 +152,17 @@ module.exports = {
       })
 
       common.sendSuccess(res, '成功', results);
+    })
+  },
+  /**
+   * 获取工作
+   * @param {number} job_id 工作id
+   * @param {(job:any)=>void} callback 回调
+   */
+  getJobById(job_id, callback) {
+    connection.getConnection().query('SELECT * FROM t_jobs WHERE id = ' + job_id, (err, results) => {
+      if(results && results.length > 0) callback(results[0])
+      else callback(null)
     })
   },
   /**
@@ -241,6 +252,19 @@ module.exports = {
         });
       }else callback(false)
     })
+    
+  },
+  /**
+   * 客户删除工作
+   * @param {number} job_id 
+   * @param {(success:boolean)=>void} callback 回调
+   */
+  deleteJobByUser(job_id, callback) {
+    connection.getConnection().query('UPDATE t_jobs SET deleted_by_user=? WHERE id=?', 
+      [ 1, job_id ], (error, results, fields) => {
+      if (error) { callback(false); logger.error('deleteJobByUser failed ! ', error); }
+      else callback(true)
+    });
     
   },
   /**
