@@ -104,7 +104,7 @@ page{
 /* 主标签页 */
 .main_tab {
   position: absolute;
-  top: 50px;
+  top: 60px;
   bottom: 70px;
   overflow-y: scroll;
   left: 0;
@@ -118,7 +118,7 @@ page{
 }
 .main_tab.full {
   position: absolute;
-  top: 48px;
+  top: 60px;
   bottom: 70px;
   left: 0;
   right: 0;
@@ -256,7 +256,7 @@ page{
 .info-tab {
   display: block;
   position: relative;
-  height: 40rpx;
+  height: 40px;
 }
 .info-tab .item {
   display: inline-block;

@@ -5,6 +5,7 @@
   padding: 10rpx;
   padding-left: 15rpx;
   background-color: white;
+  height: 60px;
 }
 .logo{
   width: 40px;

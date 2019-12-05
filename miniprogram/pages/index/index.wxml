@@ -170,7 +170,7 @@
             </view>
             <view wx:if="{{item.status==3}}"> 
               <text style="display:block;margin:8px 0">您已经与 Ta 签订合同，当前工作已完成使命</text>
-              <button class="signup" bindtap="deleteItem" data-id="{{item.id}}">点击这里删除此职位</button>
+              <button class="signup" bindtap="deleteItem" data-id="{{item.id}}">点击这里删除此记录</button>
             </view>
             <view wx:if="{{item.status==1}}"> 
               <button class="signup ed" bindtap="deleteItem" data-id="{{item.id}}" data-index="{{bindex}}">删除此工作</button>
