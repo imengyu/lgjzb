@@ -196,7 +196,7 @@ function deleteJobsRealHandler(req, res) {
     return;
   }
   jobsServices.getJobById(job_id, (job) => {
-    if(authServices.getLoggedUserId(req) != job.signui_uid) common.sendFailed(res, '无法删除他人 (' + uid + ') 的工作');
+    if(authServices.getLoggedUserId(req) != job.signup_uid) common.sendFailed(res, '无法删除他人的工作');
     else {
       if(job.status == 3){
         jobsServices.deleteJobByUser(job_id, (success) => {
