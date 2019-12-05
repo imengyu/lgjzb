@@ -1,16 +1,17 @@
 const mysql = require('mysql')
 const logger = require('./logger')
+const constConf = require('../conf/constConf')
 
 var connection = null;
 
 function initMySqlConnection() {
 
   connection = mysql.createConnection({     
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
-    port: '3306',
-    database: 'jzapi',
+    host: constConf.DB_HOST,
+    user: constConf.DB_USER,
+    password: constConf.DB_PASSWORD,
+    port: constConf.DB_PORT,
+    database: constConf.DB_DATABASE,
     timezone: '08:00'
   }); 
   connection.on('error', function(err) {
