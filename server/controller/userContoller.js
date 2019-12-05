@@ -79,7 +79,7 @@ function doLoginHandler(req, res) {
  */
 function getUserInfoHandler(req, res) {
   if(!authServices.checkUserAuthed(req)) {
-    common.sendFailed(res, '未登录，请登录后操作');
+    common.sendFailed(res, '未登录，请登录后操作', null, 401);
     return;
   }
   userServices.getUserInfo(authServices.getLoggedUserId(req), (data) => {

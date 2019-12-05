@@ -101,7 +101,7 @@ function unsignJobHandler(req, res) {
   jobsServices.getJobSigned(authServices.getLoggedUserId(req), req.params.id, (signed) => {
     if(!signed) common.sendFailed(res, '您没有报名此工作');
     else {
-      jobsServices.signJob(authServices.getLoggedUserId(req), req.params.id, (success) => {
+      jobsServices.unsignJob(req.params.id, (success) => {
         if(success) common.sendSuccess(res, '取消报名成功');
         else common.sendFailed(res, '取消报名失败，请稍后再试');
       });
@@ -176,14 +176,12 @@ function deleteJobsHandler(req, res) {
     if(authServices.getLoggedUserId(req) != uid) 
       common.sendFailed(res, '您只能删除自己发布的工作');
     else {
-      obsServices.deleteJob(job_id, (success) => {
+      jobsServices.deleteJob(job_id, (success) => {
         if(success) common.sendSuccess(res, '删除成功');
         else common.sendFailed(res, '删除失败，请稍后再试');
       });
     }
   })
-
-  j
 }
 /**
  * 删除工作信息(我的)
@@ -198,14 +196,12 @@ function deleteJobsRealHandler(req, res) {
     return;
   }
   jobsServices.getJobSignUid(job_id, (uid) => {
-    if(authServices.getLoggedUserId(req) != uid) common.sendFailed(res, '无法删除他人的工作');
+    if(authServices.getLoggedUserId(req) != uid) common.sendFailed(res, '无法删除他人 (' + uid + ') 的工作');
     else {
-      obsServices.deleteJob(job_id, (success) => {
+      jobsServices.deleteJobReal(job_id, (success) => {
         if(success) common.sendSuccess(res, '删除成功');
         else common.sendFailed(res, '删除失败，请稍后再试');
       });
     }
   })
-
-  j
 }

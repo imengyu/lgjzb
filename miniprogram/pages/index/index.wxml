@@ -112,19 +112,19 @@
           </view>
           <view wx:if="{{item.status==2}}" class="expand-area">
             <text class="price text-center">您已报名此工作，正在等待发布者接受</text>
-            <button class="signup" bindtap="unsignItem" id="{{item.id}}" data-index="{{bindex}}">取消报名</button>
+            <button class="signup" bindtap="unsignItem" data-id="{{item.id}}" data-index="{{bindex}}">取消报名</button>
           </view>
           <view wx:if="{{item.status==1}}" class="expand-area">
             <text class="price text-center">您已报名此工作，但发布者没有接受您</text>
-            <button class="signup" bindtap="unsignItem" id="{{item.id}}" data-index="{{bindex}}">取消报名</button>
+            <button class="signup" bindtap="unsignItem" data-id="{{item.id}}" data-index="{{bindex}}">取消报名</button>
           </view>
           <view wx:if="{{item.status==4}}" class="expand-area">
             <text class="price text-center">发布者已删除此工作</text>
-            <button class="signup" bindtap="deleteItemRealUser" id="{{item.id}}" data-index="{{bindex}}">删除记录</button>
+            <button class="signup" bindtap="deleteItemRealUser" data-id="{{item.id}}" data-index="{{bindex}}">删除记录</button>
           </view>
           <view wx:if="{{item.status==3||item.status==5}}" class="expand-area">
             <text class="price text-center">您已成功与发布者签订合同</text>
-            <button class="signup" bindtap="deleteItemRealUser" id="{{item.id}}" data-index="{{bindex}}">删除记录</button>
+            <button class="signup" bindtap="deleteItemRealUser" data-id="{{item.id}}" data-index="{{bindex}}">删除记录</button>
           </view>
         </view>
       </block>

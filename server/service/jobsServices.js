@@ -161,7 +161,7 @@ module.exports = {
    * @param {(exists:boolean)=>void} callback 回调
    */
   getJobSigned(uid, job_id, callback) {
-    connection.getConnection().query('SELECT * FROM t_jobs WHERE status = 1 AND id = ' + job_id, (err, results) => {
+    connection.getConnection().query('SELECT * FROM t_jobs WHERE id = ' + job_id, (err, results) => {
       callback(results && results.length > 0 && results[0].signup_uid == uid)
     })
   },
@@ -182,8 +182,8 @@ module.exports = {
    * @param {(id:number)=>void} callback 回调
    */
   getJobSignUid(job_id, callback) {
-    connection.getConnection().query('SELECT signed_uid FROM t_jobs WHERE id = ' + job_id, (err, results) => {
-      if(results && results.length > 0) callback(results[0].signed_uid)
+    connection.getConnection().query('SELECT signup_uid FROM t_jobs WHERE id = ' + job_id, (err, results) => {
+      if(results && results.length > 0) callback(results[0].signup_uid)
       else callback(0)
     })
   },
@@ -249,7 +249,7 @@ module.exports = {
    * @param {(success:boolean)=>void} callback 回调
    */
   deleteJobReal(job_id, callback) {
-    connection.getConnection().query('DELETE FROM t_jobs SET WHERE id=?', 
+    connection.getConnection().query('DELETE FROM t_jobs WHERE id=?', 
     [ job_id ], (error, results, fields) => {
       if (error) { callback(false); logger.error('deleteJobReal failed ! ', error); }
       else callback(true)

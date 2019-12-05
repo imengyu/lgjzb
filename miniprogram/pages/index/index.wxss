@@ -256,7 +256,7 @@ page{
 .info-tab {
   display: block;
   position: relative;
-  height: 40px;
+  height: 40rpx;
 }
 .info-tab .item {
   display: inline-block;

@@ -419,8 +419,7 @@ Page({
             sendFormDataphone: res.data.data.phone,
             sendFormDatatreatment: '',
           })
-        }
-        else wx.showToast({ title: '无法加载您的个人信息：' + res.data.message, icon: 'none' })
+        } else wx.showToast({ title: '无法加载您的个人信息：' + res.data.message, icon: 'none' })
       },
       fail: function (res) {
         wx.showToast({ title: '无法连接服务器，请稍后重试', icon: 'none' })
@@ -503,7 +502,7 @@ Page({
   //加载
   onLoad: function () {
     if (app.globalData.userInfo) {
-      this.loadMyInfo();
+      setTimeout(() => this.loadMyInfo(), 3000);
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
@@ -512,7 +511,7 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
-        this.loadMyInfo();
+        setTimeout(() => this.loadMyInfo(), 3000);
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -523,7 +522,7 @@ Page({
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
-          this.loadMyInfo();
+          setTimeout(() => this.loadMyInfo(), 3000);
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true

@@ -117,6 +117,7 @@ Page({
     this.setData(param)
   },
   signIteUpm: function (e) {
+    var that = this;
     var id = e.currentTarget.dataset.id;
     wx.showLoading({ title: '正在提交，请稍后', })
     request.request({
@@ -127,7 +128,7 @@ Page({
           var index = e.currentTarget.dataset.index;
           var param = {};
           param['items[' + index + '].signuped'] = true;
-          this.setData(param)
+          that.setData(param)
 
           wx.hideLoading();
           wx.showToast({ title: '报名成功' })
