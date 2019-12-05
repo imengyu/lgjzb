@@ -5,14 +5,16 @@ module.exports = {
    */
   createRoutes(app) {
     app.get('/jobs', getJobsHandler);
+    app.get('/search-jobs', searchJobsHandler);
     app.get('/user/:uid/jobs', getJobsByUserHandler);
     app.get('/user/:uid/signs', getSignJobsByUserHandler);
     app.post('/signup-job/:id', signJobHandler);
     app.post('/cancel-signup-job/:id', unsignJobHandler);
     app.post('/contract-signup-job/:id', contrctJobHandler);
 
-    app.post('/jobs', postJobsHandler)
-    app.delete('/jobs/:id', deleteJobsHandler)
+    app.post('/jobs', postJobsHandler);
+    app.delete('/jobs/:id', deleteJobsHandler);
+    app.delete('/jobs/:id/mine', deleteJobsRealHandler)
   }
 }
 
@@ -30,6 +32,14 @@ function getJobsHandler(req, res) {
   var cate_id = req.query.cate_id;
   var child_id = req.query.child_id;
   jobsServices.getJobsByType(res, cate_id, child_id);
+}
+/**
+ * 搜索工作信息
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+function searchJobsHandler(req, res) {
+  jobsServices.getJobsByKeyword(res, req.query.keyword);
 }
 /**
  * 获取用户发布的工作信息
@@ -165,6 +175,30 @@ function deleteJobsHandler(req, res) {
   jobsServices.getJobUid(job_id, (uid) => {
     if(authServices.getLoggedUserId(req) != uid) 
       common.sendFailed(res, '您只能删除自己发布的工作');
+    else {
+      obsServices.deleteJob(job_id, (success) => {
+        if(success) common.sendSuccess(res, '删除成功');
+        else common.sendFailed(res, '删除失败，请稍后再试');
+      });
+    }
+  })
+
+  j
+}
+/**
+ * 删除工作信息(我的)
+ * @param {Request} req 
+ * @param {Response} res 
+ */
+function deleteJobsRealHandler(req, res) {
+  var job_id = req.params.id;
+
+  if(!authServices.checkUserAuthed(req)) {
+    common.sendFailed(res, '未登录，请登录后操作');
+    return;
+  }
+  jobsServices.getJobSignUid(job_id, (uid) => {
+    if(authServices.getLoggedUserId(req) != uid) common.sendFailed(res, '无法删除他人的工作');
     else {
       obsServices.deleteJob(job_id, (success) => {
         if(success) common.sendSuccess(res, '删除成功');

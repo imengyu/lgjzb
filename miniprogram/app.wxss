@@ -14,12 +14,16 @@ page,view,image,swiper,swiper-navigator,video{
   bottom: 100px;
   left: 0;
   right: 0;
+  text-align: center;
 }
 .status-area text {
   color: #777;
 }
 .status-area .reload-button {
   margin-top: 20px;
+}
+.status-area image {
+  margin-bottom: 20px;
 }
 .reload-button {
   border-radius: 35px;
@@ -47,6 +51,11 @@ page,view,image,swiper,swiper-navigator,video{
   font-size: 14px;
   color: #b1b1b1;
   display: block;
+}
+.job-list .text2 {
+  font-size: 14px;
+  color: #b1b1b1;
+  display: inline-block;
 }
 .job-list .text.small {
   margin-top: 6px;
@@ -95,6 +104,9 @@ page,view,image,swiper,swiper-navigator,video{
   width: 60px;
   height: 60px;
 }
+.job-list .status-signed.right {
+  right: 25px;
+}
 .signup {
   display: block;
   background-color: #f82500;
@@ -131,4 +143,10 @@ page,view,image,swiper,swiper-navigator,video{
 .show-author .note {
   font-size: 13px;
   color: #d3d3d3;
+}
+
+/*工具类*/
+
+.text-center {
+  text-align: center;
 }

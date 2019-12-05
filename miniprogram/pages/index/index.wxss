@@ -90,7 +90,7 @@ page{
   color:red;
 }
 
-@import '../lib/weui.wxss';
+@import '../../lib/weui.wxss';
 /** wxss **/
 /** 修改默认的navigator点击态 **/
 .navigator-hover {

@@ -14,11 +14,12 @@
   position: relative;
   display: inline-block;
   width: calc(100% - 60px);
-}
-.search_icon input {
   padding: 6px 10px;
   background-color: #f0f0f0;
   border-radius: 35px;
+}
+.search_icon input {
+  width: calc(100% - 110rpx);
 }
 .search_icon .search {
   width: 100rpx;

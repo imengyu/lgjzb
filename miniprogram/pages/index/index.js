@@ -289,12 +289,41 @@ Page({
     var id = e.currentTarget.dataset.id;
     wx.showModal({
       title: '提示',
-      content: '您确认取消删除此工作？',
+      content: '您确认删除此工作？',
       success(res) {
         if (res.confirm) {
           wx.showLoading({ title: '正在提交，请稍后', })
           request.request({
             url: config.API_URL + '/jobs/' + id,
+            method: 'delete',
+            success: function (res) {
+              if (res.data.success) {
+                wx.hideLoading();
+                wx.showToast({ title: '删除成功' })
+                that.loadDataSigned();
+              }
+              else wx.showToast({ title: res.data.message, icon: 'none' })
+            },
+            fail: function (res) {
+              wx.hideLoading();
+              wx.showToast({ title: '删除失败，请稍后重试', icon: 'none' })
+            },
+          })
+        }
+      }
+    })
+  },
+  deleteItemRealUser: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '您确认删除此记录？',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '正在提交，请稍后', })
+          request.request({
+            url: config.API_URL + '/jobs/' + id + '/mine',
             method: 'delete',
             success: function (res) {
               if (res.data.success) {

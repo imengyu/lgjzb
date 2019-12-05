@@ -1,0 +1,54 @@
+<!-- redirect.wxml -->
+<view> 
+  <view wx:if="{{loadStatus=='failed'}}" class="status-area">
+    <text>哎呀，加载失败了！</text>
+    <button class="reload-button" bindtap="bindTapRelaod">重试</button>
+  </view>
+  <view wx:if="{{loadStatus=='loading'}}" class="status-area">
+    <text>正在加载</text>
+  </view>
+  <view wx:if="{{loadStatus=='none'}}" class="status-area">
+    <image src="/images/kong.png" style="width: 100px;height: 70px;"></image>
+    <text>哎呀，没有找到你需要的工作，先去其他地方看看吧</text>
+    <button class="reload-button" bindtap="bindTapBack">返回首页</button>
+  </view>
+  <view class="job-list" wx:if="{{items}}">
+    <block wx:for="{{items}}" wx:for-index="bindex" wx:key="bindex">
+      <view class="item">
+        <view class="left">
+          <block wx:if="{{type=='search'}}">
+            <HighLightText textClass="title" text="{{item.name}}" highlightText="{{search_keyword}}"></HighLightText>
+          </block>
+          <text wx:else class="title">{{item.name}}</text>
+          <text class="price">{{item.price}}</text>
+        </view>
+        <view wx:if="{{!item.always_open}}">
+          <button wx:if="{{item.open}}" class="detail collapse" bindtap="collapseItem" data-index="{{bindex}}">收起</button>
+          <button wx:else class="detail" bindtap="expandItem" data-index="{{bindex}}">详情</button>
+        </view>
+        <view wx:if="{{item.always_open||item.open}}" class="expand-area">
+           <view class="text" wx:if="{{type=='search'}}">
+            <text class="text2">地址：</text>
+            <HighLightText class="text2" text="{{item.address}}" highlightText="{{search_keyword}}"></HighLightText>
+          </view>
+          <text wx:else class="text">地址：{{item.address}}</text>
+           <view class="text" wx:if="{{type=='search'}}">
+            <text class="text2">时间：</text>
+            <HighLightText class="text2" text="{{item.time}}" highlightText="{{search_keyword}}"></HighLightText>
+          </view>
+          <text wx:else class="text">时间：{{item.time}}</text>
+          <text class="text">电话：{{item.phone}}</text>
+          <view class="text" wx:if="{{type=='search'}}">
+            <text class="text2">待遇：</text>
+            <HighLightText class="text2" text="{{item.treatment}}" highlightText="{{search_keyword}}"></HighLightText>
+          </view>
+          <text wx:else class="text">待遇：{{item.treatment}}</text>
+          <text class="text small">发布时间：{{item.add_time}}</text>
+          <button wx:if="{{item.signuped||item.signup_uid==current_uid}}" class="signup ed" data-index="{{bindex}}">您已报名，可在信息中查看</button>
+          <button wx:elif="{{item.uid==current_uid}}" class="signup ed">您不能报名自己的工作</button>
+          <button wx:else class="signup" bindtap="signIteUpm" data-id="{{item.id}}" data-index="{{bindex}}">立即报名</button>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

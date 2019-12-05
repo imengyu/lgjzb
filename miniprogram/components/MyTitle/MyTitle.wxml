@@ -5,8 +5,8 @@
   </navigator>
   <!-- 搜索 -->
   <view class="search_icon">
-    <input placeholder="搜索相关信息" />
-    <button class="search">搜索</button>
+    <input placeholder="搜索兼职信息" bindinput="searchInput"  />
+    <button class="search" bindtap="search">搜索</button>
     <!-- <image src="../../images/search.jpg" class="search"></image>-->
   </view>
   <!-- 下载按钮 -->

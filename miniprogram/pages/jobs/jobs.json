@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "来兼个职",
+  "usingComponents": {
+    "HighLightText": "../../components/HighLightText/HighLightText"
+  }
+}

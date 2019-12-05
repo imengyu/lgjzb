@@ -1,0 +1,8 @@
+<!--components/HighLightText.wxml-->
+<block wx:if="{{items && items.length > 0}}">
+  <block wx:for="{{items}}" wx:key="*this">
+    <text wx:if="{{item == highlightText}}" style="color:red;">{{item}}</text>               
+    <text class="{{textClass}}" wx:else>{{item}}</text>
+  </block>
+</block>
+<text wx:else class="{{textClass}}">{{text}}</text>
