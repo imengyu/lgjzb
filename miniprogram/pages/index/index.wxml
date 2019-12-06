@@ -159,14 +159,18 @@
             <text class="text">电话：{{item.phone}}</text>
             <text class="text">待遇：{{item.treatment}}</text>
             <text class="text small">发布时间：{{item.add_time}}</text>
-            <view wx:if="{{item.status==2}}" class="expand-area">
-              <text class="price">Ta 报名了您的工作</text>
+            <view wx:if="{{item.status==2||item.status==3||item.status==5}}" class="expand-area">
+              <text class="price" style="margin-bottom:6px">Ta 报名了您的工作</text>
               <text class="text">姓名：{{item.signed.name}}</text>
+              <text class="text">年龄：{{item.signed.age}}</text>
+              <text class="text">学历：{{item.signed.edulevel}}</text>
               <text class="text">电话：{{item.signed.phone}}</text>
               <text class="text">地址：{{item.signed.address}}</text>
-              <button class="signup" bindtap="conformSignItem" data-id="{{item.id}}" data-index="{{bindex}}">与 Ta 签订合同</button>
-              <button class="signup secondary" bindtap="conformNoSignItem" data-id="{{item.id}}" data-index="{{bindex}}">不满意 Ta ? 不签订</button>
-              
+              <text class="text">简介：{{item.signed.introd}}</text>
+              <block wx:if="{{item.status==2}}">
+                <button class="signup" bindtap="conformSignItem" data-id="{{item.id}}" data-index="{{bindex}}">与 Ta 签订合同</button>
+                <button class="signup secondary" bindtap="conformNoSignItem" data-id="{{item.id}}" data-index="{{bindex}}">不满意 Ta ? 不签订</button>
+              </block>
             </view>
             <view wx:if="{{item.status==3}}"> 
               <text style="display:block;margin:8px 0">您已经与 Ta 签订合同，当前工作已完成使命</text>
@@ -204,10 +208,19 @@
         <input value="{{myInfo.name}}" style="background-color: #eee" name="name" placeholder="请输入您的姓名" />
       </view>
       <view class="form-item">
+        <input value="{{myInfo.age}}" type="number" style="background-color: #eee" name="age" placeholder="请输入您的年龄" />
+      </view>
+      <view class="form-item">
+        <input value="{{myInfo.edulevel}}" style="background-color: #eee" name="edulevel" placeholder="请输入您的学历" />
+      </view>
+      <view class="form-item">
         <input value="{{myInfo.address}}" style="background-color: #eee" name="address" placeholder="请输入您的联系地址" />
       </view>
       <view class="form-item">
         <input value="{{myInfo.phone}}" style="background-color: #eee" name="phone" placeholder="请输入您的联系电话" />
+      </view>
+      <view class="form-item">
+        <textarea value="{{myInfo.introd}}" style="background-color: #eee;min-height:100px" name="introd" placeholder="请输入您的个人简介"></textarea>
       </view>
       <view class="form-item flex-center" style="margin-top:20px">
         <button formType="submit" class="show-author button-not-full" style="width:110px">保存修改</button>
@@ -229,6 +242,18 @@
       <view class="info-item">
         <text class="instr">我的联系电话</text>
         <text class="val">{{myInfo.phone?myInfo.phone:'未填写'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="instr">我的学历</text>
+        <text class="val">{{myInfo.edulevel?myInfo.edulevel:'未填写'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="instr">我的年龄</text>
+        <text class="val">{{myInfo.age>0?myInfo.age:'未填写'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="instr">我的简介</text>
+        <text class="val">{{myInfo.introd?myInfo.introd:'未填写'}}</text>
       </view>
       <view class="form-item" style="margin-top:20px">
         <button class="show-author" bindtap="editMyInfo">修改信息</button>

@@ -78,7 +78,7 @@ Page({
     var that = this;
     that.setData({ loadStatus: 'loading' })
     request.request({
-      url: config.API_URL + '/search-jobs?keyword=' + that.data.search_keyword,
+      url: config.API_URL + '/search-jobs?keyword=' + encodeURIComponent(that.data.search_keyword),
       data: 'get',
       header: {},
       method: 'GET',

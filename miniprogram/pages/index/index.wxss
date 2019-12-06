@@ -227,6 +227,11 @@ page{
   padding: 5px 20px;
   border-radius: 5px;
 }
+.my-form .form-item textarea {
+  padding: 5px 20px;
+  border-radius: 5px;
+  width: calc(100% - 40px);
+}
 .info-item {
   background-color: #fff;
   padding: 8px 15px;
@@ -236,6 +241,9 @@ page{
 }
 .info-item .instr {
   color: #939393;
+}
+.info-item .val {
+  max-width: 70%;
 }
 .info-item .instr.title {
   color: #000;

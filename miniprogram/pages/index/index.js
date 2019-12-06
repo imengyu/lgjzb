@@ -427,11 +427,13 @@ Page({
     })
   },
   loadMySendInfo: function (e) {
-    if (this.data.sendFormDataaddress == '' && this.data.sendFormDataphone == '')
+    /*
+    if (this.data.myInfo && this.data.sendFormDataaddress == '' && this.data.sendFormDataphone == '')
       this.setData({
         sendFormDataaddress: this.data.myInfo.address,
         sendFormDataphone: this.data.myInfo.phone,
       })
+    */
   },
 
   /* 表单提交方法 */
@@ -466,8 +468,8 @@ Page({
       }
     }
 
-    data.detail.value.parent_cate_id = this.data.sendCurrentIndex + 1;
-    data.detail.value.parent_child_id = this.data.sendCurrentSubIndex + 1;
+    data.detail.value.parent_cate_id = parseInt(this.data.sendCurrentIndex) + 1;
+    data.detail.value.parent_child_id = parseInt(this.data.sendCurrentSubIndex) + 1;
 
     wx.showLoading({ title: '正在提交，请稍后', })
     request.request({
@@ -481,9 +483,25 @@ Page({
             sendFormDataprice: '',
             sendFormDatatime: '',
             sendFormDatatreatment: '',
+            sendFormDataaddress: '',
+            sendFormDataphone: '',
           })
           wx.hideLoading();
-          wx.showToast({ title: '发布成功' })
+          wx.showModal({
+            title: '发布成功',
+            content: '您的工作已成功发布',
+            confirmText: '立即查看',
+            cancelText: '继续发布',
+            success: function(res) {
+              if(res.confirm) {
+                that.setData({
+                  curTab: 2,
+                  curTabInfo: 1,
+                })
+                that.loadDataMine();
+              }
+            }
+          })
         }
         else wx.showToast({ title: res.data.message, icon: 'none' })
       },
