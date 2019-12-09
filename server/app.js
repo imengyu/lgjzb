@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 
+const constConf = require("./conf/constConf");
 const database = require("./utils/database");
 const logger = require("./utils/logger");
 
@@ -12,8 +13,10 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const redis = require('redis')
 
-let client = redis.createClient()
-
+let client = redis.createClient({
+  host: constConf.REDIS_HOST,
+  port: constConf.REDIS_PORT,
+})
 
 app.use(bodyParser.json());
 app.use(session({
@@ -23,8 +26,8 @@ app.use(session({
   secret: 'lgjzb_server',
   store: new RedisStore({
     client: client,
-    host: '127.0.0.1',
-    port: '6379',
+    host: constConf.REDIS_HOST,
+    port: constConf.REDIS_PORT,
     ttl: 60 * 60 * 24 * 30, 
     prefix: 'ss',
   }),

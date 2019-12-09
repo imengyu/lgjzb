@@ -12,4 +12,7 @@ module.exports = {
   DB_DATABASE: 'jzapi',
   DB_USER: 'jzapi',
   DB_PASSWORD: 'jzapi',
+  REDIS_HOST: 'localhost',
+  REDIS_PORT: '6379',
+  REDIS_PASSWORD: '',
 }
