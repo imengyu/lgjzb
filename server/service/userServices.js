@@ -31,7 +31,7 @@ module.exports = {
    * @param {(data : any)=>void} callback 回调
    */
   getUserInfo(uid, callback) {
-    connection.getConnection().query('SELECT address,name,phone FROM t_user WHERE id=?', [uid], (error, results, fields) => {
+    connection.getConnection().query('SELECT address,name,phone,age,introd,edulevel FROM t_user WHERE id=?', [uid], (error, results, fields) => {
       if (error) { callback(null); logger.error('getUserInfo failed ! ', error); }
       else if(results && results.length > 0) callback(results[0])
       else callback(null)
@@ -42,9 +42,9 @@ module.exports = {
    * @param {number} uid 用户 id
    * @param {(success : boolean)=>void} callback 回调
    */
-  updateUserInfo(uid, address,name,phone, callback) {
-    connection.getConnection().query('UPDATE t_user SET address=?,name=?,phone=? WHERE id=?', 
-      [ address, name, phone, uid ], (error, results, fields) => {
+  updateUserInfo(uid, address,name,phone, age,introd,edulevel, callback) {
+    connection.getConnection().query('UPDATE t_user SET address=?,name=?,phone=?,age=?,introd=?,edulevel=? WHERE id=?', 
+      [ address, name, phone, age,introd,edulevel, uid ], (error, results, fields) => {
       if (error) { callback(false); logger.error('updateUserInfo failed ! ', error); }
       else callback(true)
     });

@@ -103,7 +103,7 @@ function updateUserInfoHandler(req, res) {
     return;
   }
   
-  userServices.updateUserInfo(authServices.getLoggedUserId(req), body.address, body.name, body.phone, (success) => {
+  userServices.updateUserInfo(authServices.getLoggedUserId(req), body.address, body.name, body.phone, body.age, body.introd, body.edulevel, (success) => {
     if(success) common.sendSuccess(res, '修改成功', null);    
     else common.sendFailed(res, '修改失败！服务器错误', null, 500);
   });

@@ -112,16 +112,20 @@ module.exports = {
         //获取已报名用户的信息
         for(var i =0 ;i<results.length;i++){
           if(results[i].signup_uid > 0) {
-            userServices.getUserInfo(results[i].signup_uid, (data) => {
-              if(data) results[i].signed = {
+            var index = i;
+            userServices.getUserInfo(results[index].signup_uid, (data) => {
+              if(data) results[index].signed = {
                 name: data.name,
                 phone: data.phone,
+                age: data.age,
+                edulevel: data.edulevel,
+                introd: data.introd,
                 address: data.address,
               }
             })
           }
         }
-        common.sendSuccess(res, '成功', results);
+        setTimeout(() => common.sendSuccess(res, '成功', results), 600);
       } else common.sendSuccess(res, '成功', []);
     })
   },
