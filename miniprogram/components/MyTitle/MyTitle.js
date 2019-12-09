@@ -25,7 +25,7 @@ Component({
     },
     search: function(e) {
       if(this.data.searchContent == '') wx.showToast({ title: '请输入您要搜索的信息哦', icon: 'none' })
-      else wx.navigateTo({ url: '../jobs/jobs?type=search&search_keyword=' + this.data.searchContent })
+      else wx.navigateTo({ url: '../jobs/jobs?type=search&search_keyword=' + (this.data.searchContent) })
     },
   }
 })
