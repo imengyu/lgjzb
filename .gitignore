@@ -2,4 +2,3 @@ node_modules/
 .vs/
 .vscode/
 logs/
-server/conf/constConf.js
